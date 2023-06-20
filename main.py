@@ -1,16 +1,19 @@
-# This is a sample Python script.
+import cv2
+from tkinter import Tk
+from tkinter.filedialog import askopenfilename
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+Tk().withdraw()
 
+img = cv2.imread(askopenfilename())
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+faces = cv2.CascadeClassifier('faces.xml')
 
+res = faces.detectMultiScale(gray, scaleFactor=2, minNeighbors=1)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+for (x, y, w, h) in res:
+    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), thickness=3)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+img = cv2.resize(img, (500, 500))
+cv2.imshow("Result", img)
+cv2.waitKey(0)

@@ -1,4 +1,5 @@
 import cv2
+from matplotlib import pyplot as pl
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 
@@ -15,5 +16,6 @@ for (x, y, w, h) in res:
     cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), thickness=3)
 
 img = cv2.resize(img, (500, 500))
-cv2.imshow("Result", img)
-cv2.waitKey(0)
+
+pl.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
+pl.show()
